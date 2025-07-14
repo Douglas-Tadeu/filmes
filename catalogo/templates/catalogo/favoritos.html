@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Filmes Favoritos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 25px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding: 15px;
+            background-color: #f9f9f9;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .btn-voltar:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Meus Filmes Favoritos</h1>
+
+        {% if favoritos %}
+            <ul>
+                {% for favorito in favoritos %}
+                    <li>
+                        <a href="{% url 'detalhe_filme' favorito.filme.id %}">
+                            🎬 {{ favorito.filme.titulo }} ({{ favorito.filme.ano }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Você ainda não favoritou nenhum filme.</p>
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn-voltar">← Voltar para Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catálogo de Filmes</title>
+</head>
+<body>
+    <h1>Catálogo de Filmes</h1>
+    
+    {% if filmes %}
+        <ul>
+        {% for filme in filmes %}
+            <li>{{ filme.titulo }} - {{ filme.ano_lancamento }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum filme cadastrado.</p>
+    {% endif %}
+</body>
+</html>

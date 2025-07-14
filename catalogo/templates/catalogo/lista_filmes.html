@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Filmes</title>
+</head>
+<body>
+    <h1>Filmes disponíveis</h1>
+    <ul>
+        {% for filme in filmes %}
+            <li>
+                <a href="{% url 'detalhe_filme' filme.id %}">{{ filme.titulo }}</a>
+            </li>
+        {% empty %}
+            <li>Nenhum filme cadastrado.</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'home' %}">Voltar para home</a></p>
+</body>
+</html>

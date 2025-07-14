@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avaliar {{ filme.titulo }}</title>
+</head>
+<body>
+    <h1>Avaliar: {{ filme.titulo }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enviar Avaliação</button>
+    </form>
+
+    <p><a href="{% url 'detalhe_filme' filme.id %}">Voltar para o filme</a></p>
+</body>
+</html>
