@@ -2,35 +2,75 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.db.models import Avg
-from .models import Filme, Usuario, Favorito, Avaliacao
-from .forms import AvaliacaoForm, RegistroForm
-from django.contrib.auth.models import User
-from django.db import models
+from .models import Filme, Usuario, Favorito, Avaliacao, Genero, Diretor
+from .forms import AvaliacaoForm, RegistroForm, FilmeForm, GeneroForm, DiretorForm
+
 
 def home(request):
-    filmes = Filme.objects.annotate(media_avaliacao=Avg('avaliacoes__nota'))  # <-- corrigido aqui
+    filmes = Filme.objects.annotate(media_avaliacao=Avg('avaliacoes__nota'))
 
     favoritos = []
-
     if request.user.is_authenticated:
         usuario, _ = Usuario.objects.get_or_create(user=request.user)
         favoritos = Favorito.objects.filter(usuario=usuario).values_list('filme_id', flat=True)
 
-        for filme in filmes:
-            filme.ja_favorito = filme.id in favoritos
-            filme.media_avaliacao = filme.media_avaliacao or 0
-    else:
-        for filme in filmes:
-            filme.ja_favorito = False
-            filme.media_avaliacao = filme.media_avaliacao or 0
+    for filme in filmes:
+        filme.ja_favorito = filme.id in favoritos
+        filme.media_avaliacao = filme.media_avaliacao or 0
 
     return render(request, 'catalogo/home.html', {'filmes': filmes})
+
+
+def lista_filmes(request):
+    filmes = Filme.objects.annotate(media_avaliacao=Avg('avaliacoes__nota'))
+
+    favoritos = []
+    if request.user.is_authenticated:
+        usuario, _ = Usuario.objects.get_or_create(user=request.user)
+        favoritos = Favorito.objects.filter(usuario=usuario).values_list('filme_id', flat=True)
+
+    for filme in filmes:
+        filme.ja_favorito = filme.id in favoritos
+        filme.media_avaliacao = filme.media_avaliacao or 0
+
+    return render(request, 'catalogo/filme/list.html', {'filmes': filmes})
+
+
+def criar_filme(request):
+    if request.method == 'POST':
+        form = FilmeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_filmes')
+    else:
+        form = FilmeForm()
+    return render(request, 'catalogo/filme/form.html', {'form': form})
+
+
+def editar_filme(request, pk):
+    filme = get_object_or_404(Filme, pk=pk)
+    if request.method == 'POST':
+        form = FilmeForm(request.POST, instance=filme)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_filmes')
+    else:
+        form = FilmeForm(instance=filme)
+    return render(request, 'catalogo/filme/form.html', {'form': form})
+
+
+def excluir_filme(request, pk):
+    filme = get_object_or_404(Filme, pk=pk)
+    if request.method == 'POST':
+        filme.delete()
+        return redirect('lista_filmes')
+    return render(request, 'catalogo/filme/confirm_delete.html', {'filme': filme})
 
 
 def detalhe_filme(request, filme_id):
     filme = get_object_or_404(Filme, id=filme_id)
 
-    media_avaliacao = Avaliacao.objects.filter(filme=filme).aggregate(avg_nota=models.Avg('nota'))['avg_nota'] or 0
+    media_avaliacao = Avaliacao.objects.filter(filme=filme).aggregate(avg_nota=Avg('nota'))['avg_nota'] or 0
     qtd_favoritos = Favorito.objects.filter(filme=filme).count()
 
     ja_favorito = False
@@ -59,24 +99,73 @@ def detalhe_filme(request, filme_id):
         'qtd_favoritos': qtd_favoritos,
         'ja_favorito': ja_favorito,
         'form': form,
-        # lembre de passar as avaliações se quiser listar no template
         'avaliacoes': Avaliacao.objects.filter(filme=filme).select_related('usuario'),
     }
     return render(request, 'catalogo/detalhe_filme.html', context)
 
-def lista_filmes(request):
-    filmes = Filme.objects.annotate(media_avaliacao=Avg('avaliacoes__nota'))
+def listar_generos(request):
+    generos = Genero.objects.all()
+    return render(request, 'catalogo/genero/lista.html', {'generos': generos})
 
-    favoritos = []
-    if request.user.is_authenticated:
-        usuario, _ = Usuario.objects.get_or_create(user=request.user)
-        favoritos = Favorito.objects.filter(usuario=usuario).values_list('filme_id', flat=True)
+def criar_genero(request):
+    if request.method == 'POST':
+        form = GeneroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_generos')
+    else:
+        form = GeneroForm()
+    return render(request, 'catalogo/genero/form.html', {'form': form, 'acao': 'Criar'})
 
-    for filme in filmes:
-        filme.ja_favorito = filme.id in favoritos
-        filme.media_avaliacao = filme.media_avaliacao or 0
+def editar_genero(request, genero_id):
+    genero = get_object_or_404(Genero, id=genero_id)
+    if request.method == 'POST':
+        form = GeneroForm(request.POST, instance=genero)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_generos')
+    else:
+        form = GeneroForm(instance=genero)
+    return render(request, 'catalogo/genero/form.html', {'form': form, 'acao': 'Editar'})
 
-    return render(request, 'catalogo/home.html', {'filmes': filmes})
+def deletar_genero(request, genero_id):
+    genero = get_object_or_404(Genero, id=genero_id)
+    if request.method == 'POST':
+        genero.delete()
+        return redirect('lista_generos')
+    return render(request, 'catalogo/genero/confirmar_delete.html', {'genero': genero})
+
+def listar_diretores(request):
+    diretores = Diretor.objects.all()
+    return render(request, 'catalogo/diretor/listar.html', {'diretores': diretores})
+
+def adicionar_diretor(request):
+    if request.method == 'POST':
+        form = DiretorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_diretores')
+    else:
+        form = DiretorForm()
+    return render(request, 'catalogo/diretor/form.html', {'form': form, 'titulo': 'Adicionar Diretor'})
+
+def editar_diretor(request, pk):
+    diretor = get_object_or_404(Diretor, pk=pk)
+    if request.method == 'POST':
+        form = DiretorForm(request.POST, instance=diretor)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_diretores')
+    else:
+        form = DiretorForm(instance=diretor)
+    return render(request, 'catalogo/diretor/form.html', {'form': form, 'titulo': 'Editar Diretor'})
+
+def excluir_diretor(request, diretor_id):
+    diretor = get_object_or_404(Diretor, pk=diretor_id)
+    if request.method == 'POST':
+        diretor.delete()
+        return redirect('listar_diretores')
+    return render(request, 'catalogo/diretor/confirmar_exclusao.html', {'diretor': diretor})
 
 @login_required
 def toggle_favorito(request, filme_id):
@@ -96,7 +185,7 @@ def register(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             user = form.save()
-            Usuario.objects.create(user=user)  # cria perfil do usuário
+            Usuario.objects.create(user=user)
             login(request, user)
             return redirect('home')
     else:

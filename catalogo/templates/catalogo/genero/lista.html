@@ -1,0 +1,10 @@
+<h1>Lista de Gêneros</h1>
+<a href="{% url 'criar_genero' %}">Novo Gênero</a>
+<ul>
+    {% for genero in generos %}
+        <li>{{ genero.nome }} -
+            <a href="{% url 'editar_genero' genero.id %}">Editar</a> |
+            <a href="{% url 'deletar_genero' genero.id %}">Excluir</a>
+        </li>
+    {% endfor %}
+</ul>

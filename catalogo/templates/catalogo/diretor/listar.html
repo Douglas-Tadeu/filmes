@@ -1,0 +1,17 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+<h2>Diretores</h2>
+<a href="{% url 'adicionar_diretor' %}">Adicionar Diretor</a>
+<ul>
+    {% for diretor in diretores %}
+        <li>
+            {{ diretor.nome }} |
+            <a href="{% url 'editar_diretor' diretor.id %}">Editar</a> |
+            <a href="{% url 'excluir_diretor' diretor.id %}">Excluir</a>
+        </li>
+    {% empty %}
+        <li>Nenhum diretor cadastrado.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

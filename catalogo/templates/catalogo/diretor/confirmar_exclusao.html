@@ -1,0 +1,11 @@
+{% extends 'catalogo/base.html' %}
+
+{% block content %}
+<h2>Excluir Diretor</h2>
+<p>Tem certeza que deseja excluir "{{ diretor.nome }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+</form>
+<a href="{% url 'listar_diretores' %}">Cancelar</a>
+{% endblock %}

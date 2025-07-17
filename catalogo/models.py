@@ -41,6 +41,7 @@ class Filme(models.Model):
     genero = models.ForeignKey(Genero, on_delete=models.SET_NULL, null=True)
     diretor = models.ForeignKey(Diretor, on_delete=models.SET_NULL, null=True)
     classificacao = models.ForeignKey(Classificacao, on_delete=models.SET_NULL, null=True)
+    trailer = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.titulo
