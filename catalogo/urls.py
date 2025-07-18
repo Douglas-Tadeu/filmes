@@ -5,6 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    #path('filmes/<int:filme_id>/avaliar/', views.avaliar_filme, name='avaliar_filme'),
+    path('avaliacoes/dashboard/criar/', views.criar_avaliacao_dashboard, name='criar_avaliacao_dashboard'),
     path('favoritos/', views.listar_favoritos, name='listar_favoritos'),
     path('filme/<int:filme_id>/', views.detalhe_filme, name='detalhe_filme'),
     path('filme/<int:filme_id>/favoritar/', views.toggle_favorito, name='toggle_favorito'),
@@ -34,6 +36,7 @@ urlpatterns = [
 
     # CRUD de Avaliações
     path('avaliacoes/', views.listar_avaliacoes, name='listar_avaliacoes'),
+    path('avaliacoes/dashboard/criar/', views.criar_avaliacao_dashboard, name='criar_avaliacao_dashboard'),
     path('avaliacoes/novo/<int:filme_id>/', views.criar_avaliacao, name='criar_avaliacao'),
     path('avaliacoes/<int:pk>/editar/', views.editar_avaliacao, name='editar_avaliacao'),
     path('avaliacao/<int:avaliacao_id>/excluir/', views.excluir_avaliacao, name='excluir_avaliacao'), 

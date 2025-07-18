@@ -7,6 +7,10 @@
 <body>
     <header>
         <h1>Catálogo de Filmes</h1>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Sair</button>
+        </form>
         <nav>
             <ul>
              <li><a href="{% url 'dashboard' %}">Cadastro inicial</a></li>
