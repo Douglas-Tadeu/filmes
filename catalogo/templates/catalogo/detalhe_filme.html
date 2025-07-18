@@ -95,6 +95,14 @@
 
     <div class="info">
         <h1>{{ filme.titulo }}</h1>
+        
+        {% if user.is_authenticated %}
+            <div style="margin-top: 10px;">
+                <a href="{% url 'editar_filme' filme.pk %}" class="btn">✏️ Editar</a>
+                <a href="{% url 'excluir_filme' filme.pk %}" class="btn" style="background-color: #e74c3c;">🗑️ Excluir</a>
+            </div>
+        {% endif %}
+
         <p><strong>Descrição:</strong> {{ filme.descricao }}</p>
         <p><strong>Gênero:</strong> {{ filme.genero.nome }}</p>
         <p><strong>Diretor:</strong> {{ filme.diretor.nome }}</p>

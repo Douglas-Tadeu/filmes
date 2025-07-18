@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center">Bem-vindo, {{ user.username }}!</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+    <a href="{% url 'lista_filmes' %}" class="btn-dashboard">🎞️ Filmes</a>
+    <a href="{% url 'listar_generos' %}" class="btn-dashboard">🎬 Gêneros</a>
+    <a href="{% url 'listar_diretores' %}" class="btn-dashboard">🎬 Diretores</a>
+    <a href="{% url 'listar_atores' %}" class="btn-dashboard">🎭 Atores</a>
+    <a href="{% url 'listar_elencos' %}" class="btn-dashboard">🎥 Elenco</a>
+    <a href="{% url 'listar_classificacoes' %}" class="btn-dashboard">🏷️ Classificações</a>
+    <a href="{% url 'listar_trailers' %}" class="btn-dashboard">📺 Trailers</a>
+    <a href="{% url 'listar_favoritos' %}" class="btn-dashboard">⭐ Favoritos</a>
+    <a href="{% url 'listar_avaliacoes' %}"  class="btn-dashboard">📝 Avaliações</a>
+</div>
+
+<h2 class="text-xl mt-10 mb-4 text-center">Avaliar Filmes</h2>
+<table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="px-4 py-2 text-left">Título</th>
+            <th class="px-4 py-2 text-left">Gênero</th>
+            <th class="px-4 py-2 text-left">Média</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for filme in filmes %}
+        <tr class="border-t">
+            <td class="px-4 py-2">{{ filme.titulo }}</td>
+            <td class="px-4 py-2">
+                {% if filme.genero %}
+                    {{ filme.genero.nome }}
+                {% else %}
+                    Sem gênero
+                {% endif %}
+            </td>
+            <td class="px-4 py-2">
+                {% if filme.media_avaliacoes %}
+                    ⭐ {{ filme.media_avaliacoes|floatformat:1 }} ({{ filme.total_avaliacoes }})
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="text-xl font-semibold mt-10 mb-4">Filmes Cadastrados</h3>
+<table class="w-full table-auto border border-gray-300">
+    <thead>
+        <tr class="bg-gray-100">
+            <th class="px-4 py-2 text-left">Título</th>
+            <th class="px-4 py-2 text-left">Gênero</th>
+            <th class="px-4 py-2 text-left">Média</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for filme in filmes %}
+        <tr class="border-t">
+            <td class="px-4 py-2">{{ filme.titulo }}</td>
+            <td class="px-4 py-2">
+                {% if filme.genero %}
+                    {{ filme.genero.nome }}
+                {% else %}
+                    Sem gênero
+                {% endif %}
+            </td>
+            <td class="px-4 py-2">
+                {% if filme.media_avaliacoes %}
+                    ⭐ {{ filme.media_avaliacoes|floatformat:1 }} ({{ filme.total_avaliacoes }})
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if messages %}
+<ul class="mt-4">
+    {% for message in messages %}
+        <li class="text-{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<style>
+.btn-dashboard {
+    display: block;
+    padding: 20px;
+    background-color: #2d3748;
+    color: #fff;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.1rem;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+.btn-dashboard:hover {
+    background-color: #4a5568;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Elenco</h2>
+<a href="{% url 'criar_elenco' %}">Adicionar Elenco</a>
+<ul>
+    {% for elenco in elencos %}
+        <li>
+            {{ elenco.ator.nome }} como {{ elenco.papel }} no filme {{ elenco.filme.titulo }}
+            [<a href="{% url 'editar_elenco' elenco.pk %}">Editar</a>]
+            [<a href="{% url 'deletar_elenco' elenco.pk %}">Excluir</a>]
+        </li>
+    {% empty %}
+        <li>Nenhum elenco cadastrado.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

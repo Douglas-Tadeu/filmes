@@ -1,0 +1,16 @@
+{% extends "catalogo/base.html" %}
+
+{% block title %}Confirmar Exclusão - Avaliação{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Excluir Avaliação</h2>
+  <p>Tem certeza que deseja excluir sua avaliação para o filme <strong>"{{ avaliacao.filme.titulo }}"</strong>?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, excluir</button>
+    <a href="{% url 'detalhe_filme' avaliacao.filme.id %}" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

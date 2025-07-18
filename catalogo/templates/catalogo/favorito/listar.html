@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Meus Favoritos</h2>
+<a href="{% url 'adicionar_favorito' %}">Adicionar Favorito</a>
+<ul>
+    {% for favorito in favoritos %}
+        <li>
+            {{ favorito.filme.titulo }}
+            [<a href="{% url 'excluir_favorito' favorito.pk %}">Remover</a>]
+        </li>
+    {% empty %}
+        <li>Você ainda não adicionou nenhum favorito.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

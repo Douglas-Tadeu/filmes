@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Trailers</h2>
+<a href="{% url 'criar_trailer' %}">Adicionar Trailer</a>
+<ul>
+    {% for trailer in trailers %}
+        <li>
+            <strong>{{ trailer.filme.titulo }}</strong>: 
+            <a href="{{ trailer.url }}" target="_blank">Ver Trailer</a> 
+            - {{ trailer.descricao }}
+            [<a href="{% url 'editar_trailer' trailer.pk %}">Editar</a>]
+            [<a href="{% url 'deletar_trailer' trailer.pk %}">Excluir</a>]
+        </li>
+    {% empty %}
+        <li>Nenhum trailer cadastrado.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Gênero</h2>
+<h2>{% if form.instance.pk %}Editar Elenco{% else %}Adicionar Elenco{% endif %}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Salvar</button>
 </form>
-<a href="{% url 'listar_generos' %}">⬅ Voltar</a>
+<a href="{% url 'listar_elencos' %}">Voltar</a>
 {% endblock %}

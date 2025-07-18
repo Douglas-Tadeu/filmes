@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Remover Favorito</h2>
+<p>Tem certeza que deseja remover o filme "{{ favorito.filme.titulo }}" dos seus favoritos?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'listar_favoritos' %}">Cancelar</a>
+</form>
+{% endblock %}

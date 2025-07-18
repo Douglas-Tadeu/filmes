@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Avaliações</h2>
+
+<ul>
+  {% for avaliacao in avaliacoes %}
+    <li>
+      Filme: {{ avaliacao.filme.titulo }} <br>
+      Usuário: {{ avaliacao.usuario.user.username }} <br>
+      Nota: {{ avaliacao.nota }} <br>
+      Comentário: {{ avaliacao.comentario }} <br>
+    </li>
+  {% empty %}
+    <li>Nenhuma avaliação cadastrada.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

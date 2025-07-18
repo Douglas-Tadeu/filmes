@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Classificações</h2>
+<a href="{% url 'criar_classificacao' %}">Adicionar Classificação</a>
+<ul>
+    {% for classificacao in classificacoes %}
+        <li>
+            {{ classificacao }} 
+            [<a href="{% url 'editar_classificacao' classificacao.pk %}">Editar</a>]
+            [<a href="{% url 'deletar_classificacao' classificacao.pk %}">Excluir</a>]
+        </li>
+    {% empty %}
+        <li>Nenhuma classificação cadastrada.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Atores</h2>
+<a href="{% url 'criar_ator' %}" class="btn btn-primary mb-3">Novo Ator</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for ator in atores %}
+        <tr>
+            <td>{{ ator.nome }}</td>
+            <td>{{ ator.data_nascimento|date:"d/m/Y" }}</td>
+            <td>
+                <a href="{% url 'editar_ator' ator.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'excluir_ator' ator.id %}" class="btn btn-sm btn-danger">Excluir</a>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="3">Nenhum ator cadastrado.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

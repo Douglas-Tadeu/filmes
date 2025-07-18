@@ -64,5 +64,6 @@ STATICFILES_DIRS = [BASE_DIR / 'catalogo' / 'static']
 #AUTH_USER_MODEL = 'catalogo.Usuario'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/catalogo/dashboard/'
 LOGOUT_REDIRECT_URL = '/'

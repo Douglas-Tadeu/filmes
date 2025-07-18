@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Filmes</title>
+</head>
+<body>
+    <header>
+        <h1>Catálogo de Filmes</h1>
+        <nav>
+            <ul>
+             <li><a href="{% url 'dashboard' %}">Cadastro inicial</a></li>
+             <li><a href="{% url 'lista_filmes' %}">Gerenciar Filmes</a></li>
+             <li><a href="{% url 'listar_generos' %}">Gerenciar Gêneros</a></li>
+             <li><a href="{% url 'listar_atores' %}">Gerenciar Atores</a></li>
+             <li><a href="{% url 'listar_elencos' %}">Gerenciar Elencos</a></li>
+             <li><a href="{% url 'listar_trailers' %}">Gerenciar Trailers</a></li>
+             <li><a href="{% url 'listar_classificacoes' %}">Gerenciar Classificações</a></li>
+             <li><a href="{% url 'listar_favoritos' %}">Gerenciar Favoritos</a></li>
+            </ul>
+        </nav>
+        <hr>
+    </header>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; 2025 - Sistema de Catálogo</p>
+    </footer>
+</body>
+</html>

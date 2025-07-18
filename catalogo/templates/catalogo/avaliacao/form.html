@@ -1,0 +1,33 @@
+{% extends "catalogo/base.html" %}
+
+{% block title %}Avaliar Filme - {{ filme.titulo }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-3">Avaliar: <strong>{{ filme.titulo }}</strong></h2>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <div class="mb-3">
+      <label for="{{ form.nota.id_for_label }}" class="form-label">Nota (1 a 5):</label>
+      {{ form.nota|add_class:"form-control" }}
+      {% if form.nota.errors %}
+        <div class="text-danger small">{{ form.nota.errors }}</div>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="{{ form.comentario.id_for_label }}" class="form-label">Comentário:</label>
+      {{ form.comentario|add_class:"form-control" }}
+      {% if form.comentario.errors %}
+        <div class="text-danger small">{{ form.comentario.errors }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar Avaliação</button>
+    <a href="{% url 'detalhe_filme' filme.id %}" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

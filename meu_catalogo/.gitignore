@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+*.so
+*.dylib
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+
+# Media files (se você armazenar uploads localmente)
+media/
+uploads/
+
+# Static files coletados
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+
+# Migrations pyc (às vezes podem aparecer)
+catalogo/migrations/__pycache__/
+
+# Outros arquivos temporários
+*.swp
+*.bak
+*.tmp
