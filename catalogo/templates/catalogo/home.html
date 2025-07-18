@@ -79,7 +79,8 @@
                     Sair
                 </button>
             </form>
-             <p><a href="{% url 'favoritos' %}">📁 Meus Favoritos</a></p>
+             <p><a href="{% url 'dashboard' %}" style="margin-left: 10px; color: purple;">📝 Cadastro</a></p>
+             <p><a href="{% url 'listar_favoritos' %}">📁 Meus Favoritos</a></p>
     {% else %}
         <p><a href="{% url 'login' %}">Entrar</a> | <a href="{% url 'register' %}">Registrar</a></p>
     {% endif %}
